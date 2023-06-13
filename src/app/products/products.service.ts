@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Product } from './product';
+import { HttpClient } from '@angular/common/http';
+
+interface ProductDTO {
+  title: string;
+  price: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
+
+  private productsUrl = 'https://fakestoreapi.com/products';
 
   private products = [
     {
@@ -22,10 +30,17 @@ export class ProductsService {
     }
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return of(this.products);
+    return this.http.get<ProductDTO[]>(this.productsUrl).pipe(
+      map(products => products.map(product => {
+        return {
+          name: product.title,
+          price: product.price
+        }
+      }))
+    );
   }
 
 }
