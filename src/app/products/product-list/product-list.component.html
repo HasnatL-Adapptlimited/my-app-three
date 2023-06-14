@@ -9,6 +9,7 @@
 <app-product-detail
   *ngIf="selectedProduct; else noProduct"
   [id]="selectedProduct.id"
+  (deleted)="onDelete()"
   (bought)="onBuy()">
 </app-product-detail>
 <ng-template #noProduct>

@@ -16,6 +16,7 @@ export class ProductDetailComponent implements OnChanges {
   @Input() id = -1;
   product$: Observable<Product> | undefined;
   @Output() bought = new EventEmitter();
+  @Output() deleted = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.product$ = this.productService.getProduct(this.id);
@@ -28,6 +29,12 @@ export class ProductDetailComponent implements OnChanges {
   changePrice(product: Product, price: number) {
     this.productService.updateProduct(product.id, price).subscribe(() => {
       alert(`The price of ${product.name} was changed!`)
+    })
+  }
+
+  remove(product: Product) {
+    this.productService.deleteProduct(product.id).subscribe(() => {
+      this.deleted.emit();
     })
   }
 
