@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Product } from '../product';
+import { Observable } from 'rxjs';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -8,16 +10,15 @@ import { Product } from '../product';
 })
 export class ProductDetailComponent implements OnChanges {
 
+  constructor(private productService: ProductsService) {}
+
   @Input() product: Product | undefined;
+  @Input() id = -1;
+  product$: Observable<Product> | undefined;
   @Output() bought = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
-    const product = changes['product'];
-    if (!product.isFirstChange()) {
-      const oldValue = product.previousValue.name;
-      const newValue = product.currentValue.name;
-      console.log(`Product changed from ${oldValue} to ${newValue}`);
-    }
+    this.product$ = this.productService.getProduct(this.id);
   }
 
   buy() {
