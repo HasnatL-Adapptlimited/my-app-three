@@ -1,11 +1,13 @@
+<form #form>
 <div>
   <label for="name">Name</label>
-  <input id="name" #name required/>
+  <input type="text" id="name" name="name" #name required/>
 </div>
 <div>
   <label for="price">Price</label>
   <input id="price" #price/>
 </div>
 <div>
-  <button (click)="createProduct(name.value, price.valueAsNumber)">Create</button>
+  <button (click)="form.checkValidity()? createProduct(name.value, price.valueAsNumber) : null">Create</button>
 </div>
+</form>
