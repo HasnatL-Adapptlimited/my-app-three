@@ -43,7 +43,11 @@ export class ProductsService {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<ProductDTO[]>(this.productsUrl).pipe(
+    const options = {
+      headers: new HttpHeaders({ Authorization: 'myAuthToken' })
+    };
+
+    return this.http.get<ProductDTO[]>(this.productsUrl, options).pipe(
       map(products => products.map(product => {
           return this.convertToProduct(product)
       }))
