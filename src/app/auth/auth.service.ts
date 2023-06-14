@@ -21,4 +21,6 @@ export class AuthService {
   logout() {
     this.token = '';
   }
+
+  get isLoggedIn() { return this.token !== '' } //Returns bool
 }

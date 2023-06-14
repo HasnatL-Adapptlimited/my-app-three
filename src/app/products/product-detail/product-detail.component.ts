@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { Product } from '../product';
 import { Observable } from 'rxjs';
 import { ProductsService } from '../products.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -10,7 +11,7 @@ import { ProductsService } from '../products.service';
 })
 export class ProductDetailComponent implements OnChanges {
 
-  constructor(private productService: ProductsService) {}
+  constructor(private productService: ProductsService, public authService: AuthService) {}
 
   @Input() product: Product | undefined;
   @Input() id = -1;
