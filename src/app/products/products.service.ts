@@ -4,6 +4,7 @@ import { Product } from './product';
 import { HttpClient } from '@angular/common/http';
 
 interface ProductDTO {
+  id: number;
   title: string;
   price: number;
 }
@@ -32,15 +33,27 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
+  private convertToProduct(product: ProductDTO): Product {
+    return {
+      id: product.id,
+      name: product.title,
+      price: product.price
+
+    }
+  }
+
   getProducts(): Observable<Product[]> {
     return this.http.get<ProductDTO[]>(this.productsUrl).pipe(
       map(products => products.map(product => {
-        return {
-          name: product.title,
-          price: product.price
-        }
+          return this.convertToProduct(product)
       }))
     );
+  }
+
+  getProduct(id:number): Observable<Product> {
+    return this.http.get<ProductDTO>(`${this.productsUrl}/${id}`).pipe(
+      map(product => this.convertToProduct(product))
+    )
   }
 
 }
