@@ -2,6 +2,8 @@
   <h2>Product Details</h2>
   <h3>{{product.name}}</h3>
   <span>{{product.price | currency:'EUR'}}</span>
+  <input placeholder="New Price" #price/>
+  <button (click)="changePrice(product, price.valueAsNumber)">Change</button>
   <p>
     <button (click)="buy()">Buy Now</button>
   </p>

@@ -25,4 +25,10 @@ export class ProductDetailComponent implements OnChanges {
     this.bought.emit();
   }
 
+  changePrice(product: Product, price: number) {
+    this.productService.updateProduct(product.id, price).subscribe(() => {
+      alert(`The price of ${product.name} was changed!`)
+    })
+  }
+
 }
