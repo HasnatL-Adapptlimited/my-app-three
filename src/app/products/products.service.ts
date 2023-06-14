@@ -42,6 +42,15 @@ export class ProductsService {
     }
   }
 
+  addProduct(name: string, price: number): Observable<Product> {
+    return this.http.post<ProductDTO>(this.productsUrl, {
+      title: name,
+      price: price
+    }).pipe(
+      map(product => this.convertToProduct(product))
+    );
+  }
+
   getProducts(): Observable<Product[]> {
     return this.http.get<ProductDTO[]>(this.productsUrl).pipe(
       map(products => products.map(product => {
